@@ -4,9 +4,7 @@ import Sidebar from './Sidebar';
 const Main = () => {
   return (
     <>
-      <Sidebar>
-        <Outlet />
-      </Sidebar>
+      <Sidebar></Sidebar>
     </>
   );
 };

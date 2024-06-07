@@ -22,7 +22,7 @@ import Item from './Item.js';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import CustomMenu from '../components/menu';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
-import { useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import CustomAvatar from '../components/avatar';
 import { stringAvatar } from '../utils';
 import { Menu, MoreVert } from '@mui/icons-material';
@@ -327,7 +327,7 @@ const Sidebar = (props) => {
           maxWidth="fluid"
         >
           <DrawerHeader />
-          {children}
+          <Outlet />
         </Container>
       </Box>
     </>
