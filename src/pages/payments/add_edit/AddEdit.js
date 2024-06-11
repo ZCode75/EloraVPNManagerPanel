@@ -27,7 +27,7 @@ const initialForm = {
   total: 0,
   method: 'MONEY_ORDER',
   status: 'PAID',
-  is_negative: false
+  allow_negative: false
 };
 
 const AddEdit = (props) => {
@@ -181,7 +181,7 @@ const AddEdit = (props) => {
                 />
               </Grid>
               <Grid item xs={2}>
-                <CheckBox labelPlacement="top" name="is_negative" legend={'Is Negative'} />
+                <CheckBox labelPlacement="top" name="allow_negative" legend={'Allow Negative'} />
               </Grid>
             </Grid>
             <DialogActions>
