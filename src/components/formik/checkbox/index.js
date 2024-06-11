@@ -25,7 +25,7 @@ const CheckBox = ({ name, label, legend, ...otherProps }) => {
   }
   return (
     <>
-      <FormControl>
+      <FormControl labelPlacement="top">
         <FormLabel component={'legend'}>{legend}</FormLabel>
         <FormGroup>
           <FormControlLabel control={<CheckboxMD {...configCheckbox} />} label={label} />

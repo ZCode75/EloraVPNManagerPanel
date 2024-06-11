@@ -15,6 +15,7 @@ import UserInfo from 'pages/components/user_info';
 import useOrders from 'hooks/useOrders';
 import GLOBAL from 'components/variables';
 import Autocomplete from 'components/formik/autocomplete';
+import CheckBox from 'components/formik/checkbox';
 
 const validationSchema = yup.object({
   user_id: yup.number().required()
@@ -25,7 +26,8 @@ const initialForm = {
   order_id: 0,
   total: 0,
   method: 'MONEY_ORDER',
-  status: 'PENDING'
+  status: 'PAID',
+  is_negative: false
 };
 
 const AddEdit = (props) => {
@@ -107,7 +109,7 @@ const AddEdit = (props) => {
                 )} */}
               </UserInfo>
             )}
-            <Grid container spacing={12} rowSpacing={2} justifyContent={'center'}>
+            <Grid container spacing={2} rowSpacing={2}>
               {!user && (
                 <Grid item xs={12}>
                   <UserSelect
@@ -170,13 +172,16 @@ const AddEdit = (props) => {
                   disabled={initial.id && condition.includes(values.status)}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={10}>
                 <TextField
                   label={'Total'}
                   price
                   name="total"
                   disabled={!!values.order_id || (initial.id && condition.includes(values.status))}
                 />
+              </Grid>
+              <Grid item xs={2}>
+                <CheckBox labelPlacement="top" name="is_negative" legend={'Is Negative'} />
               </Grid>
             </Grid>
             <DialogActions>
