@@ -20,10 +20,11 @@ import { Toaster } from 'react-hot-toast';
 const theme = createTheme({
   typography: {
     fontFamily: [
-      'public-sans',
-      ' -apple-system',
+      '-apple-system',
+      'BlinkMacSystemFont',
       'Segoe UI',
-      'Helvetica',
+      'PingFang SC',
+      'Hiragino Sans GB',
       'Arial',
       'sans-serif',
       'Apple Color Emoji',
