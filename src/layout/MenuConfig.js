@@ -8,6 +8,12 @@ const menu = {
         page: 'dashboard'
       },
       {
+        title: 'Monitoring',
+        root: true,
+        icon: 'query_stats',
+        page: 'monitoring'
+      },
+      {
         title: 'Users',
         root: true,
         icon: 'group',
