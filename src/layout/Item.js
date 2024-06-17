@@ -1,13 +1,10 @@
-import { useState } from 'react';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
-import { Collapse, List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
-import SubMenu from './SubMenu';
-import { Link, useLocation } from 'react-router-dom';
+import { ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import Icon from '../components/icon';
 
 const Item = ({ title, icon, submenu, color, page }) => {
-  const location = useLocation();
-
   const [listMenu, setListMenu] = useState(false);
 
   const handleClick = () => {
@@ -17,14 +14,16 @@ const Item = ({ title, icon, submenu, color, page }) => {
   return (
     <>
       {page ? (
-        <Link to={page}>
-          <ListItemButton selected={location.pathname === `/${page}`}>
-            <ListItemIcon>
-              <Icon size="30px">{icon}</Icon>
-            </ListItemIcon>
-            <ListItemText primary={title} />
-          </ListItemButton>
-        </Link>
+        <NavLink to={page} end>
+          {({ isActive }) => (
+            <ListItemButton selected={isActive}>
+              <ListItemIcon>
+                <Icon size="30px">{icon}</Icon>
+              </ListItemIcon>
+              <ListItemText primary={title} />
+            </ListItemButton>
+          )}
+        </NavLink>
       ) : (
         <>
           <ListItemButton onClick={handleClick}>
@@ -34,7 +33,7 @@ const Item = ({ title, icon, submenu, color, page }) => {
             <ListItemText primary={title} />
             {listMenu ? <ExpandLess /> : <ExpandMore />}
           </ListItemButton>
-          <Collapse in={listMenu}>
+          {/* <Collapse in={listMenu}>
             <List component="div" disablePadding className="">
               {!!submenu &&
                 submenu.map(({ page, icon, title, submenu }, idx) => (
@@ -49,7 +48,7 @@ const Item = ({ title, icon, submenu, color, page }) => {
                   />
                 ))}
             </List>
-          </Collapse>
+          </Collapse> */}
         </>
       )}
     </>

@@ -30,13 +30,9 @@ const theme = createTheme({
       'Segoe UI Emoji',
       'Segoe UI Symbol'
     ].join(','),
-    fontSize: 20,
-    fontWeight: 500,
-    h4: {
-      fontWeight: 700
-    },
+    fontSize: 19,
+    h4: {},
     body1: {
-      fontWeight: 500,
       color: 'rgb(99, 115, 129)'
     }
   },
@@ -104,6 +100,14 @@ const theme = createTheme({
             color: '#000',
             margin: 2
           }
+        }
+      }
+    },
+    MuiListItem: {
+      styleOverrides: {
+        root: {
+          fontWeight: 100,
+          fontSize: 25
         }
       }
     }
