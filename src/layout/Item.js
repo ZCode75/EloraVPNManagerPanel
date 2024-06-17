@@ -18,7 +18,7 @@ const Item = ({ title, icon, submenu, color, page }) => {
           {({ isActive }) => (
             <ListItemButton selected={isActive}>
               <ListItemIcon>
-                <Icon size="30px">{icon}</Icon>
+                <Icon>{icon}</Icon>
               </ListItemIcon>
               <ListItemText primary={title} />
             </ListItemButton>

@@ -1,13 +1,12 @@
 @font-face {
   font-family: 'Material Icons';
-  src: url('../fonts/material_icons/material.woff2') format('woff2');
+  src: url('../fonts/material_icons/kJEhBvYX7BgnkSrUwT8OhrdQw4oELdPIeeII9v6oFsLjBuVY.woff2') format('woff2');
 }
 
 .material-icons {
   font-family: 'Material Icons';
-  font-weight: normal;
-  font-style: normal;
-  font-size: 24px;
+  font-weight: 300;
+  font-size: 32px;
   /* Preferred icon size */
   display: inline-block;
   line-height: 1;
