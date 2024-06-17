@@ -21,7 +21,7 @@ import Item from './Item.js';
 import MenuConfig from './MenuConfig';
 import { Outlet } from 'react-router-dom';
 
-let drawerWidth = 240;
+let drawerWidth = 220;
 const color = '#7635dc';
 
 const DrawerHeader = styled('div')(({ theme }) => ({
@@ -217,7 +217,7 @@ const Sidebar = (props) => {
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            p: { lg: 5, sm: 0 }
+            p: { lg: 3, sm: 0 }
           }}
           maxWidth="fluid"
         >
