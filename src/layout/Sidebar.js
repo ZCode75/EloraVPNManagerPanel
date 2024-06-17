@@ -1,6 +1,5 @@
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import {
-  Container,
   Divider,
   Drawer,
   ListItemButton,
@@ -14,12 +13,12 @@ import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import { styled } from '@mui/material/styles';
 import { memo, useCallback, useEffect, useState } from 'react';
+import { Outlet } from 'react-router-dom';
 import CustomAvatar from '../components/avatar';
 import { stringAvatar } from '../utils';
 import Header from './Header';
 import Item from './Item.js';
 import MenuConfig from './MenuConfig';
-import { Outlet } from 'react-router-dom';
 
 let drawerWidth = 220;
 const color = '#7635dc';
@@ -212,18 +211,19 @@ const Sidebar = (props) => {
           {drawer}
         </Drawer>
 
-        <Container
+        <Box
           component="main"
           sx={{
             display: 'flex',
             flexDirection: 'column',
+            width: 1,
             p: { lg: 3, sm: 0 }
           }}
           maxWidth="fluid"
         >
           <DrawerHeader />
           <Outlet />
-        </Container>
+        </Box>
       </Box>
     </>
   );
