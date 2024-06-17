@@ -1,8 +1,9 @@
-import { Fade, ListItemIcon, ListItemText, Menu, MenuItem } from '@mui/material';
+import { Fade, ListItemIcon, ListItemText, MenuItem } from '@mui/material';
+import MenuMD from '@mui/material/Menu';
 import React, { forwardRef, useImperativeHandle } from 'react';
 import Icon from '../icon';
 
-const MenuCustom = forwardRef(({ items }, ref) => {
+const Menu = forwardRef(({ items }, ref) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   useImperativeHandle(ref, () => ({
@@ -21,7 +22,7 @@ const MenuCustom = forwardRef(({ items }, ref) => {
 
   return (
     <>
-      <Menu
+      <MenuMD
         id="simple-menu"
         anchorEl={anchorEl}
         keepMounted
@@ -61,9 +62,9 @@ const MenuCustom = forwardRef(({ items }, ref) => {
               <ListItemText>{name}</ListItemText>
             </MenuItem>
           ))}
-      </Menu>
+      </MenuMD>
     </>
   );
 });
 
-export default MenuCustom;
+export default Menu;

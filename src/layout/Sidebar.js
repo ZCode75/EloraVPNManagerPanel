@@ -1,31 +1,25 @@
-import { memo, useCallback, useEffect, useRef, useState } from 'react';
-import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import MuiAppBar from '@mui/material/AppBar';
-import List from '@mui/material/List';
-import IconButton from '@mui/material/IconButton';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import {
   Container,
-  CssBaseline,
   Divider,
+  Drawer,
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  ListSubheader,
-  Toolbar,
-  Drawer
+  ListSubheader
 } from '@mui/material';
+import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
-import MenuConfig from './MenuConfig';
-import Item from './Item.js';
-import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
-import CustomMenu from '../components/menu';
-import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
-import { useNavigate } from 'react-router-dom';
+import IconButton from '@mui/material/IconButton';
+import List from '@mui/material/List';
+import { styled } from '@mui/material/styles';
+import { memo, useCallback, useEffect, useState } from 'react';
 import CustomAvatar from '../components/avatar';
 import { stringAvatar } from '../utils';
-import { Menu, MoreVert } from '@mui/icons-material';
+import Header from './Header';
+import Item from './Item.js';
+import MenuConfig from './MenuConfig';
+import { Outlet } from 'react-router-dom';
 
 let drawerWidth = 240;
 const color = '#7635dc';
@@ -77,23 +71,36 @@ const XsDrawer = styled(MuiDrawer, {
   })
 }));
 
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open'
-})(({ theme, open }) => ({
-  zIndex: theme.zIndex.drawer - 1,
-  ...(open && {
-    width: `calc(100% - ${drawerWidth}px)`
-  }),
-  background: '#fff',
-  boxShadow: 'none',
-  color: 'black',
-  border: 'none'
-}));
+const FireNav = styled(List)({
+  '& .MuiListItemButton-root': {
+    margin: 5,
+    borderRadius: 5,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    color: 'rgb(99, 115, 129)'
+  },
+
+  '& .Mui-selected': {
+    color
+  },
+  '& .MuiTouchRipple-root': {
+    color
+  },
+
+  '& .MuiListItemIcon-root': {
+    minWidth: 0,
+    marginRight: 16,
+    color: 'inherit'
+  },
+  '& .MuiListItemText-root': {
+    color: 'inherit'
+  }
+});
 
 const Sidebar = (props) => {
   const { children, window } = props;
-  const menuRef = useRef();
-  const mobileMenuRef = useRef();
+
   const [open, setOpen] = useState(true);
   const [fix, setFix] = useState(true);
   const [openDraweMobile, setOpenDraweMobile] = useState(false);
@@ -101,41 +108,6 @@ const Sidebar = (props) => {
   const handleDrawerClose = () => {
     setOpen(true);
     setFix(!fix);
-  };
-
-  const FireNav = styled(List)({
-    '& .MuiListItemButton-root': {
-      margin: 5,
-      borderRadius: 5,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'flex-start',
-      color: 'rgb(99, 115, 129)'
-    },
-
-    '& .Mui-selected': {
-      color
-    },
-    '& .MuiTouchRipple-root': {
-      color
-    },
-
-    '& .MuiListItemIcon-root': {
-      minWidth: 0,
-      marginRight: 16,
-      color: 'inherit'
-    },
-    '& .MuiListItemText-root': {
-      display: `${open ? '' : 'none'}`,
-      color: 'inherit'
-    }
-  });
-
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    localStorage.clear();
-    navigate('/login');
   };
 
   const [permissions] = useState();
@@ -205,85 +177,8 @@ const Sidebar = (props) => {
 
   return (
     <>
-      <CustomMenu
-        ref={menuRef}
-        items={[
-          {
-            id: 1,
-            name: 'Logout',
-            icon: 'logout',
-            color: 'red',
-            onClick: handleLogout
-          }
-        ]}
-      />
-      <CustomMenu
-        ref={mobileMenuRef}
-        items={[
-          {
-            id: 1,
-            name: 'Notifications',
-            icon: 'notifications',
-            color: 'primary',
-            onClick: () => alert()
-          },
-          {
-            id: 1,
-            name: 'Profile',
-            icon: 'person',
-            color: 'primary',
-            onClick: () => alert()
-          }
-        ]}
-      />
       <Box sx={{ display: 'flex', height: '100%' }}>
-        <CssBaseline />
-        <AppBar
-          position="fixed"
-          sx={{
-            width: { sm: `calc(100% - ${drawerWidth}px)` }
-          }}
-        >
-          <Toolbar>
-            <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                edge="start"
-                sx={{ mr: 2, display: { sm: 'none' } }}
-                size="large"
-                onClick={() => {
-                  setOpenDraweMobile(!openDraweMobile);
-                }}
-              >
-                <Menu color="secondary" />
-              </IconButton>
-            </Box>
-            <Box sx={{ flexGrow: 1 }} />
-            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-              <IconButton size="large">
-                <PeopleAltIcon color="secondary" />
-              </IconButton>
-              <IconButton size="large">
-                <NotificationsNoneIcon color="secondary" />
-              </IconButton>
-            </Box>
-            <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-              <IconButton
-                size="large"
-                aria-label="show more"
-                onClick={(e) => mobileMenuRef.current.changeStatus(e)}
-              >
-                <MoreVert color="secondary" />
-              </IconButton>
-            </Box>
-            <IconButton disableRipple onClick={(e) => menuRef.current.changeStatus(e)}>
-              <CustomAvatar {...stringAvatar(user?.name)} />
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-
-        {/* End Appbar */}
+        <Header user={user} drawerWidth={drawerWidth} setOpenDraweMobile={setOpenDraweMobile} />
 
         <XsDrawer
           onMouseOver={() => !fix && setOpen(true)}
@@ -327,7 +222,7 @@ const Sidebar = (props) => {
           maxWidth="fluid"
         >
           <DrawerHeader />
-          {children}
+          <Outlet />
         </Container>
       </Box>
     </>
