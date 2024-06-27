@@ -40,7 +40,10 @@ const style = {
   color: 'rgb(33, 43, 54)',
   backgroundColor: 'rgb(255, 255, 255)',
   border: 'none',
-
+  '& .super-app-theme--cell': {
+    display: 'flex',
+    alignItems: 'center'
+  },
   '& .super-app-theme--header': {
     backgroundColor: 'rgb(244, 246, 248)'
   },
@@ -209,12 +212,7 @@ const CustomGrid = forwardRef(
 
     function getTransactionStatus({ row }, field) {
       return (
-        <Typography
-          display={'flex'}
-          alignItems={'center'}
-          component={'span'}
-          color={+row[field] >= 0 ? 'success' : 'error'}
-        >
+        <Typography color={+row[field] >= 0 ? 'success' : 'error'}>
           {+row[field] >= 0 ? (
             <ArrowDropUp fontSize="large" color="success" />
           ) : (
@@ -227,24 +225,6 @@ const CustomGrid = forwardRef(
 
     function totalPrice({ row }, field) {
       return separateNum(row[field] - row.total_discount_amount);
-    }
-
-    function getTransactionStatus({ row }, field) {
-      return (
-        <Typography
-          display={'flex'}
-          alignItems={'center'}
-          component={'span'}
-          color={+row[field] >= 0 ? 'success' : 'error'}
-        >
-          {+row[field] >= 0 ? (
-            <ArrowDropUp fontSize="large" color="success" />
-          ) : (
-            <ArrowDropDown fontSize="large" color="error" />
-          )}
-          {separateNum(row[field])}
-        </Typography>
-      );
     }
 
     const getTypeIcon = useCallback(({ row }, field) => {
@@ -435,6 +415,7 @@ const CustomGrid = forwardRef(
                 ...item,
                 ...(item?.width ? { width: item?.width } : { flex: 1 }),
                 headerClassName: 'super-app-theme--header',
+                cellClassName: 'super-app-theme--cell',
                 valueGetter: item?.valueGetter
                   ? (param) => handleFunc(param, item.valueGetter, item.field)
                   : null,
