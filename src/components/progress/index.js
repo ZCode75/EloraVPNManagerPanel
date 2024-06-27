@@ -5,7 +5,6 @@ import { Box, Typography } from '@mui/material';
 
 const BorderLinearProgress = styled(LinearProgress)(() => ({
   height: 10,
-  width: 130,
   borderRadius: 5,
 
   [`& .${linearProgressClasses.bar}`]: {
@@ -21,14 +20,10 @@ const Progress = ({ value, secondaryLabel }) => {
     'primary';
   return (
     <>
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <Box sx={{ width: 'auto', mx: 0.5 }}>
-          <BorderLinearProgress variant="determinate" value={value} color={color} />
-        </Box>
-        <Box sx={{ width: 80 }}>
-          <Typography variant="body2">{secondaryLabel}</Typography>
-        </Box>
-      </Box>
+      <>
+        <BorderLinearProgress variant="determinate" value={value} color={color} />
+        <Typography variant="body2">{secondaryLabel}</Typography>
+      </>
     </>
   );
 };
