@@ -428,7 +428,8 @@ const CustomGrid = forwardRef(
                 field: 'id',
                 headerName: 'ID',
                 headerClassName: 'super-app-theme--header',
-                align: 'left'
+                align: 'left',
+                width: 1
               },
               ...columns.map((item) => ({
                 ...item,
