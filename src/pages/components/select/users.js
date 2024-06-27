@@ -140,20 +140,32 @@ const UserSelect = ({ name, onBlur, onChange }) => {
                               <Grid item>
                                 <MonetizationOn color="primary" />
                               </Grid>
-                              <Grid item>{user?.balance ? separateNum(user?.balance) : 0}</Grid>
+                              <Grid item>
+                                <Typography variant="body1" component={'div'}>
+                                  {user?.balance ? separateNum(user?.balance) : 0}
+                                </Typography>
+                              </Grid>
                             </Grid>
                             <Grid container spacing={1} alignItems={'stretch'}>
                               <Grid item>
                                 <Person color="primary" />
                               </Grid>
-                              <Grid item>{user?.username}</Grid>
+                              <Grid item>
+                                <Typography variant="body1" component={'div'}>
+                                  {user?.username}
+                                </Typography>
+                              </Grid>
                             </Grid>
                             {user?.phone_number && (
                               <Grid container spacing={1} alignItems={'stretch'}>
                                 <Grid item>
                                   <PhoneAndroid color="primary" />
                                 </Grid>
-                                <Grid item>{user?.phone_number}</Grid>
+                                <Grid item>
+                                  <Typography variant="body1" component={'div'}>
+                                    {user?.phone_number}
+                                  </Typography>
+                                </Grid>
                               </Grid>
                             )}
                             {user?.telegram_username && (
@@ -161,7 +173,11 @@ const UserSelect = ({ name, onBlur, onChange }) => {
                                 <Grid item>
                                   <Telegram color="primary" />
                                 </Grid>
-                                <Grid item>{user?.telegram_username}</Grid>
+                                <Grid item>
+                                  <Typography variant="body1" component={'div'}>
+                                    {user?.telegram_username}
+                                  </Typography>
+                                </Grid>
                               </Grid>
                             )}
                           </Grid>
