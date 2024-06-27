@@ -2,30 +2,29 @@ const columns = [
   {
     headerName: 'Full Name',
     field: 'full_name',
-    width: 200
+    width: 100
   },
   {
     headerName: 'Service Title',
-    field: 'service_title',
-    width: 200
+    field: 'service_title'
   },
   {
     headerName: 'Usage',
     field: JSON.stringify(['used_traffic', 'used_traffic_percent', 'data_limit']),
     renderCell: 'progress',
-    width: 300
+    width: 120
   },
   {
     headerName: 'Usage',
     field: 'expired_at',
     renderCell: 'progressDay',
-    width: 300
+    width: 100
   },
   {
     headerName: 'Status',
     field: 'enable',
     renderCell: 'status',
-    width: 80
+    width: 1
   },
   {
     headerName: 'Modified',
