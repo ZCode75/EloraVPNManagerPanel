@@ -72,7 +72,6 @@ const XsDrawer = styled(MuiDrawer, {
 
 const FireNav = styled(List)({
   '& .MuiListItemButton-root': {
-    margin: 5,
     borderRadius: 5,
     display: 'flex',
     alignItems: 'center',
@@ -98,7 +97,7 @@ const FireNav = styled(List)({
 });
 
 const Sidebar = (props) => {
-  const { children, window } = props;
+  const { window } = props;
 
   const [open, setOpen] = useState(true);
   const [fix, setFix] = useState(true);
@@ -219,7 +218,6 @@ const Sidebar = (props) => {
             width: 1,
             p: { lg: 3, sm: 0 }
           }}
-          maxWidth="fluid"
         >
           <DrawerHeader />
           <Outlet />
