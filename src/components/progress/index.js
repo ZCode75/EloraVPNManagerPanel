@@ -4,9 +4,9 @@ import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgr
 import { Box, Typography } from '@mui/material';
 
 const BorderLinearProgress = styled(LinearProgress)(() => ({
-  height: 10,
+  height: 20,
   borderRadius: 5,
-
+  minWidth: 100,
   [`& .${linearProgressClasses.bar}`]: {
     borderRadius: 5
   }
@@ -20,10 +20,12 @@ const Progress = ({ value, secondaryLabel }) => {
     'primary';
   return (
     <>
-      <>
+      <Box position={'relative'}>
         <BorderLinearProgress variant="determinate" value={value} color={color} />
-        <Typography variant="body2">{secondaryLabel}</Typography>
-      </>
+        <Typography variant="overline" position={'absolute'} left={3} top={-5} color="#fff">
+          {secondaryLabel}
+        </Typography>
+      </Box>
     </>
   );
 };
