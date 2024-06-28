@@ -6,7 +6,8 @@ const columns = [
   },
   {
     headerName: 'Service Title',
-    field: 'service_title'
+    field: 'service_title',
+    width: 100
   },
   {
     headerName: 'Usage',
@@ -18,7 +19,7 @@ const columns = [
     headerName: 'Usage',
     field: 'expired_at',
     renderCell: 'progressDay',
-    width: 100
+    width: 120
   },
   {
     headerName: 'Status',
@@ -29,7 +30,8 @@ const columns = [
   {
     headerName: 'Modified',
     field: 'modified_at',
-    renderCell: 'date'
+    renderCell: 'date',
+    width: 100
   }
 ];
 
