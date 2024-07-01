@@ -6,7 +6,16 @@ import {
   NotInterested,
   TaskAlt
 } from '@mui/icons-material';
-import { Alert, AlertTitle, Box, DialogActions, Divider, Grid, Typography } from '@mui/material';
+import {
+  Alert,
+  AlertTitle,
+  Box,
+  DialogActions,
+  Divider,
+  Grid,
+  InputAdornment,
+  Typography
+} from '@mui/material';
 import Avatar from 'components/avatar';
 import Button from 'components/button';
 import Autocomplete from 'components/formik/autocomplete';
@@ -16,13 +25,15 @@ import HttpService from 'components/httpService';
 import Http from 'components/httpService/Http';
 import api from 'components/httpService/api';
 import GLOBAL from 'components/variables';
-import { Form, Formik } from 'formik';
+import { Form, Formik, useFormikContext } from 'formik';
+import useOrders from 'hooks/useOrders';
 import useUsers from 'hooks/useUsers';
 import DataLimit from 'pages/components/dataLimit';
 import Durations from 'pages/components/durations';
 import ServicesSelect from 'pages/components/select/services';
 import UserSelect from 'pages/components/select/users';
 import UserInfo from 'pages/components/user_info';
+import { OrderInfo } from 'pages/components/user_info/OrderInfo';
 import { Fragment, memo, useEffect, useState } from 'react';
 import {
   convertByteToInt,
@@ -50,17 +61,37 @@ const initialForm = {
   total_discount_amount: 0,
   status: 'PAID',
   data_limit: 0,
-  ip_limit: 0
+  ip_limit: 0,
+  extra_discount: 0,
+  dis: 0
+};
+
+const ExtraField = (props) => {
+  const {
+    values: { dis, total, total_discount_amount },
+    touched,
+    setFieldValue
+  } = useFormikContext();
+
+  useEffect(() => {
+    // set the value of textC, based on textA and textB
+    setFieldValue(props.name, ((+total - +total_discount_amount) * +dis) / 100);
+  }, [dis]);
+
+  return <TextField {...props} />;
 };
 
 const AddEdit = (props) => {
   const { refrence, initial, createRow, editRow } = props;
   const [postDataLoading, setPostDataLoading] = useState(false);
   const [accounts, setAccounts] = useState([]);
+  const [balance, setBalance] = useState(0);
   const { getUser, user, isLoading: isLoadingUser } = useUsers();
+  const { orders, isLoading: isLoadingOrders, getOrders } = useOrders();
 
   useEffect(() => {
     if (initial.user_id) getUser(initial.user_id);
+    if (initial.user_id) getOrders({ user_id: initial?.user_id, sort: '-modified' });
     return () => {};
   }, []);
 
@@ -104,7 +135,9 @@ const AddEdit = (props) => {
   };
 
   const handleBlurUserId = async (user) => {
+    setBalance(user?.balance);
     setAccounts(user?.accounts);
+    getOrders({ user_id: user?.id, sort: '-modified' });
   };
   const condition = ['CANCELED', 'COMPLETED'];
   return (
@@ -148,7 +181,7 @@ const AddEdit = (props) => {
                   : {})}
               ></UserInfo>
             )}
-            <Grid container spacing={12} rowSpacing={2} justifyContent={'center'}>
+            <Grid container spacing={2} rowSpacing={2} justifyContent={'center'}>
               {!user && (
                 <>
                   <Grid item xs={12}>
@@ -163,6 +196,10 @@ const AddEdit = (props) => {
                   </Grid>
                 </>
               )}
+              <Grid item xs={12}>
+                <OrderInfo orders={orders} user={user} balance={balance} />
+              </Grid>
+
               {!initial?.id && (
                 <Grid item xs={12}>
                   <Autocomplete
@@ -281,6 +318,8 @@ const AddEdit = (props) => {
                       setFieldValue('data_limit', service.data_limit || 0);
                       setFieldValue('total', service.price || 0);
                       setFieldValue('total_discount_amount', service.discount || 0);
+                      setFieldValue('extra_discount', 0);
+                      setFieldValue('dis', 0);
                     }
                   }}
                   onClear={() => {
@@ -288,10 +327,28 @@ const AddEdit = (props) => {
                     setFieldValue('data_limit', 0);
                     setFieldValue('total', 0);
                     setFieldValue('total_discount_amount', 0);
+                    setFieldValue('extra_discount', 0);
+                    setFieldValue('dis', 0);
                   }}
                 />
               </Grid>
-
+              {!initial?.id && (
+                <>
+                  <Grid item xs={3}>
+                    <TextField
+                      label={'DIS'}
+                      type="number"
+                      name="dis"
+                      InputProps={{
+                        endAdornment: <InputAdornment position="end">%</InputAdornment>
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={9}>
+                    <ExtraField label={'Extera Discount'} price name="extra_discount" />
+                  </Grid>
+                </>
+              )}
               {values.service_id ? (
                 <Grid item xs={12}>
                   <Box textAlign={'left'} m={1}>
@@ -309,6 +366,15 @@ const AddEdit = (props) => {
                       </Typography>{' '}
                       <Typography component={'span'}>
                         {separateNum(values.total - values.total_discount_amount)}
+                      </Typography>
+                      <br />
+                      <Typography fontWeight={800} component={'span'}>
+                        Total Price:
+                      </Typography>{' '}
+                      <Typography component={'span'}>
+                        {separateNum(
+                          values.total - values.extra_discount - values?.total_discount_amount
+                        )}
                       </Typography>
                       <br />
                       <Typography fontWeight={800} component={'span'}>
