@@ -98,8 +98,7 @@ const UserSelect = ({ name, onBlur, onChange }) => {
           <Box overflow="auto" maxHeight={'99vh'}>
             {users.length === 0 && !isLoading && (
               <Box textAlign={'center'} m={10}>
-                {' '}
-                No Found User.
+                <Typography>No Found User</Typography>
               </Box>
             )}
             <List>
