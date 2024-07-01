@@ -216,7 +216,7 @@ const Sidebar = (props) => {
             display: 'flex',
             flexDirection: 'column',
             width: 1,
-            p: { lg: 3, sm: 0 }
+            p: { lg: 1, sm: 0 }
           }}
         >
           <DrawerHeader />
