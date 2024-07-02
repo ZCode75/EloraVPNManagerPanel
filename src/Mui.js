@@ -111,6 +111,13 @@ const theme = createTheme({
           fontSize: 25
         }
       }
+    },
+    MuiFormLabel: {
+      styleOverrides: {
+        root: {
+          fontSize: 15
+        }
+      }
     }
   }
 });
