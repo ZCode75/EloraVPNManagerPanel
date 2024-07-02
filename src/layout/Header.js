@@ -1,5 +1,6 @@
 import { MoreVert, NotificationsNone, PeopleAlt } from '@mui/icons-material';
-import { AppBar, Box, IconButton, Toolbar } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import { AppBar, Box, IconButton, InputAdornment, TextField, Toolbar } from '@mui/material';
 import Avatar from 'components/avatar';
 import Menu from 'components/menu';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -55,7 +56,7 @@ const Header = ({ user, drawerWidth, setOpenDraweMobile }) => {
         sx={(theme) => ({
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           zIndex: theme.zIndex.drawer - 1,
-          background: '#fff',
+          background: '#f4f6f8',
           boxShadow: 'none',
           color: 'black',
           border: 'none'
@@ -78,6 +79,18 @@ const Header = ({ user, drawerWidth, setOpenDraweMobile }) => {
           </Box>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+            <TextField
+              size="small"
+              fullWidth={false}
+              placeholder="Search"
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <SearchIcon />
+                  </InputAdornment>
+                )
+              }}
+            />
             <IconButton size="large">
               <PeopleAlt color="secondary" />
             </IconButton>

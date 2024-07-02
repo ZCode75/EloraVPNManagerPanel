@@ -31,7 +31,7 @@ import Chip from 'components/chip';
 import Progress from 'components/progress';
 import dayjs from 'dayjs';
 import Tooltip from 'components/tooltip';
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 const style = {
   boxShadow:
@@ -45,7 +45,7 @@ const style = {
     alignItems: 'center'
   },
   '& .super-app-theme--header': {
-    backgroundColor: 'rgb(244, 246, 248)'
+    backgroundColor: '#f4f6f8'
   },
   '& .super-app-theme--header:first-of-type': {
     borderTopLeftRadius: '8px',
@@ -56,7 +56,7 @@ const style = {
     borderBottomStartRadius: '8px'
   }
 };
-const rowPerPage = [10, 20, 30];
+const rowPerPage = [10, 20, 30, 100];
 const CustomGrid = forwardRef(
   (
     {
@@ -378,7 +378,7 @@ const CustomGrid = forwardRef(
           }
         />
 
-        <div style={{ height: 550, width: '100%' }}>
+        <Box height={550}>
           <DataGrid
             {...(paginateServ ? paginationServ : localPaginate)}
             pageSizeOptions={rowPerPage}
@@ -471,7 +471,7 @@ const CustomGrid = forwardRef(
               iid: idx + 1
             }))}
           />
-        </div>
+        </Box>
       </>
     );
   }

@@ -1,5 +1,6 @@
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import {
+  Container,
   Divider,
   Drawer,
   ListItemButton,
@@ -28,6 +29,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   alignItems: 'center',
   justifyContent: 'flex-end',
   padding: theme.spacing(0, 1),
+  background: '#f4f6f8',
   // necessary for content to be below app bar
   ...theme.mixins.toolbar
 }));
@@ -210,18 +212,18 @@ const Sidebar = (props) => {
           {drawer}
         </Drawer>
 
-        <Box
+        <Container
           component="main"
+          maxWidth
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            width: 1,
             p: { lg: 1, sm: 0 }
           }}
         >
           <DrawerHeader />
           <Outlet />
-        </Box>
+        </Container>
       </Box>
     </>
   );
