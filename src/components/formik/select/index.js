@@ -7,11 +7,11 @@ const Select = ({
   name,
   label,
   isLoading,
-  options,
+  options = [],
   onChange,
-  labelName,
+  labelName = 'name',
   labelName2,
-  fullWidth,
+  fullWidth = true,
   ...otherProps
 }) => {
   const [field, mata] = useField(name);
@@ -52,12 +52,6 @@ const Select = ({
       )}
     </>
   );
-};
-
-Select.defaultProps = {
-  options: [],
-  labelName: 'name',
-  fullWidth: true
 };
 
 export default Select;
