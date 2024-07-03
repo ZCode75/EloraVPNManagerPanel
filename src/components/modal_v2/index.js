@@ -14,7 +14,21 @@ import { useTheme } from '@mui/material/styles';
 import Icon from '../icon';
 
 const Modal = forwardRef(
-  ({ title, children, onBackClose, maxWidth, popup, icon, dialogActions }, ref) => {
+  (
+    {
+      title,
+      children,
+      onBackClose = true,
+      maxWidth = 'md',
+      popup,
+      icon,
+      dialogActions,
+      keepMounted,
+      fullWidth = true,
+      sx
+    },
+    ref
+  ) => {
     const [open, setOpen] = useState(false);
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
@@ -39,9 +53,10 @@ const Modal = forwardRef(
       <Dialog
         open={open}
         onClose={() => (onBackClose ? handleClose() : false)}
-        maxWidth={maxWidth || 'md'}
+        maxWidth={maxWidth}
         fullScreen={popup ? false : fullScreen}
-        fullWidth
+        fullWidth={fullWidth}
+        keepMounted={keepMounted}
       >
         {title && (
           <DialogTitle
@@ -66,13 +81,13 @@ const Modal = forwardRef(
             </IconButton>
           </DialogTitle>
         )}
-        <DialogContent dividers>{children}</DialogContent>
+        <DialogContent sx={sx} dividers>
+          {children}
+        </DialogContent>
         <DialogActions>{dialogActions}</DialogActions>
       </Dialog>
     );
   }
 );
-Modal.defaultProps = {
-  onBackClose: true
-};
+
 export default Modal;
