@@ -214,7 +214,7 @@ const Sidebar = (props) => {
 
         <Container
           component="main"
-          maxWidth
+          maxWidth="lg"
           sx={{
             display: 'flex',
             flexDirection: 'column',
