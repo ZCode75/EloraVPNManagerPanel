@@ -1,7 +1,7 @@
 import { Box, Skeleton, Typography } from '@mui/material';
 import Avatar from 'components/avatar';
 import Grid from 'components/grid';
-import { stringAvatar } from 'utils';
+import { separateNum, stringAvatar } from 'utils';
 
 const UserInfo = ({ user, isLoading, children, secondaryCard = false }) => {
   const {
@@ -11,7 +11,8 @@ const UserInfo = ({ user, isLoading, children, secondaryCard = false }) => {
     last_name,
     first_name,
     telegram_chat_id,
-    accounts
+    accounts,
+    balance
   } = user;
   return (
     <>
@@ -50,6 +51,7 @@ const UserInfo = ({ user, isLoading, children, secondaryCard = false }) => {
             {telegram_chat_id && <Typography variant="h6">ChatID: {telegram_chat_id} </Typography>}
             {phone_number && <Typography variant="h6">Phone Number: {phone_number} </Typography>}
             {accounts && <Typography variant="h6">Count Account: {accounts?.length} </Typography>}
+            {balance && <Typography variant="h6">Balance: {separateNum(balance)} </Typography>}
             {children}
           </Grid>
         </Grid>
