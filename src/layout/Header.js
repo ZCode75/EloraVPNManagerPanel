@@ -1,22 +1,43 @@
 import { MoreVert, NotificationsNone, PeopleAlt } from '@mui/icons-material';
-import SearchIcon from '@mui/icons-material/Search';
-import { AppBar, Box, IconButton, InputAdornment, TextField, Toolbar } from '@mui/material';
-import Avatar from 'components/avatar';
-import Menu from 'components/menu';
 import MenuIcon from '@mui/icons-material/Menu';
-import { useRef } from 'react';
+import SearchIcon from '@mui/icons-material/Search';
+import { AppBar, Box, IconButton, InputBase, Paper, Toolbar } from '@mui/material';
+import Avatar from 'components/avatar';
+import Button from 'components/button';
+import Menu from 'components/menu';
+import Modal from 'components/modal_v2';
+import useUsers from 'hooks/useUsers';
+import { debounce } from 'lodash';
+import UserInfo from 'pages/components/user_info';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { stringAvatar } from 'utils';
 
 const Header = ({ user, drawerWidth, setOpenDraweMobile }) => {
   const menuRef = useRef();
   const mobileMenuRef = useRef();
+  const showInfoRef = useRef();
   const navigate = useNavigate();
+
+  const [search, setSearch] = useState('');
+
+  const { getUsers, users, isLoading = isLoadingUsers } = useUsers();
 
   const handleLogout = () => {
     localStorage.clear();
     navigate('/login');
   };
+
+  useEffect(() => {
+    if (search.length > 0) getUsers(search);
+    return () => {};
+  }, [search]);
+
+  const handleChange = useCallback((e) => {
+    setSearch(e.target.value);
+  }, []);
+
+  const debouncedResults = useMemo(() => debounce(handleChange, 500), [handleChange]);
 
   return (
     <>
@@ -51,6 +72,55 @@ const Header = ({ user, drawerWidth, setOpenDraweMobile }) => {
           }
         ]}
       />
+      <Modal
+        keepMounted
+        ref={showInfoRef}
+        maxWidth="sm"
+        fullWidth={false}
+        popup
+        dialogActions={
+          <Button size="small" onClick={() => showInfoRef.current.close()}>
+            Close
+          </Button>
+        }
+        sx={{
+          p: 1,
+          m: 0
+        }}
+      >
+        <Box display={'flex'} flexDirection={'column'} height={'100%'}>
+          <Paper
+            component="div"
+            sx={{
+              p: '2px 4px',
+              display: 'flex',
+              alignItems: 'center',
+              width: 400,
+              boxShadow: 'none',
+              borderBottom: '1px solid #e5e5e5',
+              bgcolor: 'background.default',
+              mb: 2
+            }}
+          >
+            <InputBase
+              sx={{ flex: 1, p: 2, fontSize: 15 }}
+              label="Search..."
+              onChange={debouncedResults}
+              placeholder="Search users..."
+            />
+            <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
+              <SearchIcon />
+            </IconButton>
+          </Paper>
+          <Box height={300} overflow={'auto'}>
+            {users.map((user) => (
+              <Box key={user.id}>
+                <UserInfo user={user} />
+              </Box>
+            ))}
+          </Box>
+        </Box>
+      </Modal>
       <AppBar
         position="fixed"
         sx={(theme) => ({
@@ -79,18 +149,9 @@ const Header = ({ user, drawerWidth, setOpenDraweMobile }) => {
           </Box>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <TextField
-              size="small"
-              fullWidth={false}
-              placeholder="Search"
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <SearchIcon />
-                  </InputAdornment>
-                )
-              }}
-            />
+            <IconButton size="large" onClick={() => showInfoRef.current.open()}>
+              <SearchIcon />
+            </IconButton>
             <IconButton size="large">
               <PeopleAlt color="secondary" />
             </IconButton>
